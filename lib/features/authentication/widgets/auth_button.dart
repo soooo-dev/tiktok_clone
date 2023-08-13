@@ -5,19 +5,19 @@ import 'package:tiktok_clone/constants/sizes.dart';
 class AuthButton extends StatelessWidget {
   final String text;
   final FaIcon icon;
-  final Widget widget;
+  final Widget onTapWidget;
 
   const AuthButton({
     super.key,
     required this.text,
     required this.icon,
-    required this.widget,
+    required this.onTapWidget,
   });
 
   void _onAuthButtonTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => widget,
+        builder: (context) => onTapWidget,
       ),
     );
   }
