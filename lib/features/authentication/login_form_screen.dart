@@ -11,6 +11,18 @@ class LoginFormScreen extends StatefulWidget {
 }
 
 class _LoginFormScreenState extends State<LoginFormScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Map<String, String> formData = {};
+
+  void _onSubmitTap() {
+    if (_formKey.currentState != null) {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,15 +34,47 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
           horizontal: Sizes.size36,
         ),
         child: Form(
+            key: _formKey,
             child: Column(
-          children: [
-            TextFormField(),
-            Gaps.v16,
-            TextFormField(),
-            Gaps.v28,
-            const FromButton(disabled: false),
-          ],
-        )),
+              children: [
+                Gaps.v28,
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "Emal",
+                  ),
+                  validator: (value) {
+                    return null;
+                  },
+                  onSaved: (newValue) {
+                    if (newValue != null) {
+                      formData['email'] = newValue;
+                    }
+                  },
+                ),
+                Gaps.v16,
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "Password",
+                  ),
+                  validator: (value) {
+                    return null;
+                  },
+                  onSaved: (newValue) {
+                    if (newValue != null) {
+                      formData['password'] = newValue;
+                    }
+                  },
+                ),
+                Gaps.v28,
+                GestureDetector(
+                  onTap: _onSubmitTap,
+                  child: const FromButton(
+                    disabled: false,
+                    text: "Log in",
+                  ),
+                ),
+              ],
+            )),
       ),
     );
   }
